@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: file-processor
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  data:
+    mongodb:
+      uri: mongodb://admin:123@localhost:27017/financial?authSource=admin

@@ -17,11 +17,8 @@ import java.time.LocalDateTime;
 public interface FinancialTransactionConverter {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt", expression = "java(getLocalDateTimeNow())")
-    @Mapping(target = "updatedAt", expression = "java(getLocalDateTimeNow())")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     FinancialTransactionEntity toEntity(FinancialTransactionDto financialTransactionDto);
 
-    default LocalDateTime getLocalDateTimeNow() {
-        return LocalDateTime.now();
-    }
 }

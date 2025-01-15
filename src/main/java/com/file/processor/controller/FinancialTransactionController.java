@@ -1,6 +1,6 @@
 package com.file.processor.controller;
 
-import com.file.processor.model.FinancialTransactionDto;
+import com.file.processor.controller.response.UploadResponse;
 import com.file.processor.repository.entity.FinancialTransactionEntity;
 import com.file.processor.service.FileProcessorService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +23,9 @@ public class FinancialTransactionController {
     private final FileProcessorService<FinancialTransactionEntity> service;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") final MultipartFile multipartFile) {
+    public ResponseEntity<UploadResponse> uploadFile(@RequestParam("file") final MultipartFile multipartFile) {
         if (multipartFile.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The file cannot be empty");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new UploadResponse("The file cannot be empty"));
         }
 
         try {
@@ -33,10 +33,10 @@ public class FinancialTransactionController {
 
             service.processFile(file);
 
-            return ResponseEntity.ok("File processed successfully");
+            return ResponseEntity.ok(new UploadResponse("File processed successfully"));
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error processing the file: " + e.getMessage());
+                    .body(new UploadResponse(("Error processing the file: " + e.getMessage())));
         }
     }
 
